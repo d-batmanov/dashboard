@@ -1,70 +1,41 @@
-/*
-export const getAvailableYears = (data) => {
-    return [2011, 2012, 2013]
-}
-*/
-
 //! 1. Функция - getAvailableYears, которая принимает весь массив данных и возвращает массив доступных годов в виде строк:
 export const getAvailableYears = (data) => {
-    const years = data.map(item => item.Year.toString());
+    const years = data.map(item => item.Year);
     const uniqueYears = [...new Set(years)];
     return uniqueYears
 };
-//! В этой функции мы использовали map, чтобы преобразовать каждый год в строку с помощью toString(). 
-//! Затем мы удалили дубликаты, используя Set, и вернули уникальные годы в виде массива строк.
-
-
-
-
-// Это была твоя функция, которую я переписал))
-// export const getDataByTargetYear = (data, year) => {
-//     return data.filter(row => row.Year === year)
-// }
-
 
 //! 2. Вот функция принимает год и массив данных и возвращает новый массив объектов, относящихся только к этому году:
 export const getDataByYear = (data, year) => {
     return data.filter(item => item.Year === year);
 };
-//! Эта функция использует метод filter для отбора объектов, у которых год соответствует переданному году в виде строки. 
-//! Результатом является новый массив объектов, относящихся только к указанному году.
-
 
 //! 3. Вот функция - getFinancialStatistics, которая принимает массив данных date и год year и возвращает объект с двумя полями: 'Financial Statistics: number1' и 'Income Target': number2'. 
-//! Первое поле содержит сумму значений свойства 'Income' из массива данных, сгруппированную по указанному году. 
-//! Второе поле содержит сумму значений свойства 'Target Income' из массива данных, сгруппированную по указанному году.
-export const getFinancialStatistics = (date, year) => {
-    const filteredData = date.filter(item => item.Year === year);
-    
-    const number1 = filteredData.reduce((sum, item) => {
+export const getFinancialStatistics = (data) => {    
+    const number1 = data.reduce((sum, item) => {
         return sum + item.Income;
       }, 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
     
-    const number2 = filteredData.reduce((sum, item) => {
+    const number2 = data.reduce((sum, item) => {
         return sum + item['Target Income'];
       }, 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
     
-      return {
-        'Financial Statistics': number1,
-        'Income Target': number2
-      };
+    return {
+      'Financial Statistics': number1,
+      'Income Target': number2
+    };
   };
-//! В этой функции я сначала использую метод filter, чтобы отфильтровать объекты с заданным годом из массива данных date. 
-//! Затем использую метод reduce, чтобы получить сумму значений свойства 'Income' и 'Target Income' в отфильтрованном массиве данных. 
-//! Наконец, я возвращаю объект с двумя полями, содержащими соответствующие суммы.
 
-//! Также, я использую метод toLocaleString() с параметром undefined для форматирования чисел с запятыми после каждых трех символов 
-//! и передаю опцию { maximumFractionDigits: 0 }, чтобы округлить числа до целых значений.
-
-
-// Также у меня возник вопрос. По поводу правильного расположения числел в проекте, но это мы уже посмотрим с тобой лично.
-  
 
 //! 4. Вот функция, которая принимает массив данных date и год year и возвращает новый массив объектов с агрегированными значениями по месяцам:
-export const aggregateDataByMonth = (date, year) => {
-    const filteredData = date.filter(item => item.Year === year);
-  
-    const aggregatedData = filteredData.reduce((result, item) => {
+/*
+ * TODO: Сделать для всех функций где используется подобный подход
+ * 1. Убрать year из аргумента функции, функция должа принимать только аргумент data, без какой либо
+ * фильтрации внутри функции, отфильтрованные данные функция получает в качестве аргумента. 
+ * Сама функция должна выполнять только одно действие, которое отражено в ее названии
+ */
+export const aggregateDataByMonth = (data) => {
+    const aggregatedData = data.reduce((result, item) => {
       const month = item.Month;
       const income = item.Income;
   
@@ -84,23 +55,11 @@ export const aggregateDataByMonth = (date, year) => {
     }));
   };
 
-//! В этой функции использую метод filter, чтобы отфильтровать объекты с заданным годом из массива данных date.
-//! Использую метод reduce, чтобы агрегировать значения по месяцам.
-
-//! Внутри reduce проверяю, существует ли уже объект с текущим месяцем в массиве result. 
-//! Если объект с таким месяцем существует, добавляю значение дохода к существующему объекту. 
-//! Если же объект с таким месяцем не найден, то создаю новый объект и добавляю его в массив result с текущим месяцем и значением дохода.
-  
-//! Затем, перед возвратом результата, применяю метод toLocaleString() к значению дохода с опцией { maximumFractionDigits: 0 }, 
-//! чтобы получить числовое значение без плавающей точки и с запятой после каждого третьего символа.
-
-
 
 //! 5. Вот функция, которая принимает массив данных date и год Year и возвращает массив объектов с агрегированными значениями по источникам дохода ('Income sources') (суммируя столбец Counts):
-export const aggregateDataByIncomeSources = (date, Year) => {
-    const filteredData = date.filter(item => item.Year === Year);
-  
-    const aggregatedData = filteredData.reduce((result, item) => {
+export const aggregateDataByIncomeSources = (data) => {
+
+    const aggregatedData = data.reduce((result, item) => {
       const incomeSource = item['Income sources'];
       const counts = item.Counts;
   
@@ -133,20 +92,137 @@ export const aggregateDataByIncomeSources = (date, Year) => {
     return modifiedData;
   };
   
-//! В этой функции использую метод filter, чтобы отфильтровать объекты с заданным годом из массива данных date. 
-//! Затем использую метод reduce, чтобы агрегировать значения по источникам дохода ('Income sources').
 
-//! Внутри reduce проверяю, существует ли уже объект с текущим источником дохода в массиве result. 
-//! Если объект с таким источником дохода существует, то добавляю значение количества ('Counts') к существующему объекту. 
-//! Если же объект с таким источником дохода не найден, то создаю новый объект и добавляю его в массив result с текущим источником дохода и значением количества.
+//! 6. Вот экспортируемая функция, которая принимает массив данных, год и функцию для агрегации данных по месяцам и возвращает среднее значение дохода (Income) из функции aggregateDataByMonth.
 
-//! Затем мы сортируем агрегированные данные в обратном порядке (от Z до A) с помощью метода sort и функции сравнения строк localeCompare.
+/**
+ * TODO: 
+ * 1. Удалить аргумент функции aggregateDataByMonth
+ * 2. Удалить year
+ * 3. Переименовать date в data
+ * 4. Избавить от функции aggregateDataByMonth, получать в качестве аргумента функции данные за конкретный год
+ * На основе данных за год просуммировать income каждой строки и разделить результат на кол-во месяцев в году
+ */
+export function calculateAverageIncome(data, aggregateDataByMonth) {
+    const aggregatedData = aggregateDataByMonth(data);
+  
+    // Суммируем доходы по месяцам
+    const totalIncome = aggregatedData.reduce((sum, data) => {
+      const income = parseFloat(data.Income.replace(',', ''));
+      return sum + income;
+    }, 0);
+  
+    // Вычисляем среднее значение и округляем до целого числа
+    const averageIncome = Math.round(totalIncome / aggregatedData.length);
+  
+    return averageIncome.toLocaleString(); // Форматируем число с разделителями
+  }
+  
+//! 7. Вот экспортируемая функция, которая принимает массив данных и год в качестве аргументов. 
+export const calculateTotalOperatingProfit = (data) => {
+  
+    const aggregatedData = data.reduce((result, item) => {
+      const month = item.Month;
+      const operatingProfit = item['operating profit'];
+  
+      const existingMonth = result.find(obj => obj.Month === month);
+      if (existingMonth) {
+        existingMonth['operating profit'] += operatingProfit;
+      } else {
+        result.push({ Month: month, 'operating profit': operatingProfit });
+      }
+  
+      return result;
+    }, []);
+  
+    return aggregatedData.map(item => ({
+      Month: item.Month,
+      'operating profit': item['operating profit'].toLocaleString(undefined, { maximumFractionDigits: 0 })
+    }));
+  };
+  
 
-//! Я использую Math.floor для округления значения процентного соотношения до ближайшего целого числа.
+//!! 8.  Вот экспортируемая функция, которая принимает функцию calculateTotalOperatingProfit, массив данных date и год year. 
+export function getTotalOperatingProfitForYear(data, calculateTotalOperatingProfit) {
+    const monthlyData = calculateTotalOperatingProfit(data);
 
-//! Наконец, перед возвратом результата, мы применяем метод toLocaleString() к значению количества ('Counts') с опцией { maximumFractionDigits: 0 },
-//! чтобы получить числовое значение с запятой после каждых трех символов.
+    // Вычисляем сумму операционных прибылей за год
+    const totalOperatingProfit = monthlyData.reduce((sum, data) => {
+      const profit = parseFloat(data['operating profit'].replace(',', ''));
+      return sum + profit;
+    }, 0);
+  
+    return totalOperatingProfit.toLocaleString(); // Возвращаем сумму в виде строки
+  }
+  
+// 9. функция, которая принимает массив данных date и год year и возвращает новый массив объектов с агрегированными значениями по полю 'Marketing Strategies' и полю 'Income'.
+export const aggregateDataByMarketingStrategies = (data) => {
+  
+    const totalIncome = data.reduce((sum, item) => sum + parseFloat(item.Income), 0);
+  
+    const aggregatedData = data.reduce((result, item) => {
+      const strategy = item['Marketing Strategies'];
+      const income = parseFloat(item.Income);
+      const percentage = ((income / totalIncome) * 100).toFixed(2) + '%';
+  
+      const existingStrategy = result.find(obj => obj['Marketing Strategies'] === strategy);
+      if (existingStrategy) {
+        existingStrategy.Income += income;
+        existingStrategy['Процентное соотношение - Income'] = ((existingStrategy.Income / totalIncome) * 100).toFixed(2) + '%';
+      } else {
+        result.push({
+          'Marketing Strategies': strategy,
+          Income: income,
+          'Процентное соотношение - Income': percentage
+        });
+      }
+  
+      return result;
+    }, []);
+  
+    const modifiedData = aggregatedData.map(item => ({
+      'Marketing Strategies': item['Marketing Strategies'],
+      Income: Math.round(item.Income).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+      'Процентное соотношение - Income': item['Процентное соотношение - Income']
+    }));
+  
+    return modifiedData;
+  };
+  
+// 10 функция
+export const calculateIncomeRatio = (data) => {
+    const totalIncome = data.reduce((sum, item) => sum + parseFloat(item.Income), 0);
+    const totalTargetIncome = data.reduce((sum, item) => sum + parseFloat(item['Target Income']), 0);
+  
+    const incomeRatio = (totalIncome / totalTargetIncome) * 100;
+  
+    return incomeRatio.toFixed(0) + '%'; 
+  };
 
+// 11 функция 
+export const aggregateIncomeBySource = (data) => {
+    const incomeBySource = data.reduce((result, item) => {
+      const source = item['Income sources'];
+      const income = parseFloat(item.Income);
+  
+      if (result[source]) {
+        result[source] += income;
+      } else {
+        result[source] = income;
+      }
+  
+      return result;
+    }, {});
+  
+    const aggregatedData = Object.entries(incomeBySource).map(([source, income]) => ({
+      'Income sources': source,
+      Income: income.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }));
+  
+    return aggregatedData;
+  };
+  
+// 12 функция (листья)
 
 
   
