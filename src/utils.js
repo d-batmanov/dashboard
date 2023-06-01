@@ -13,11 +13,11 @@ export const getDataByYear = (data, year) => {
 //! 3. Вот функция - getFinancialStatistics, которая принимает массив данных date и год year и возвращает объект с двумя полями: 'Financial Statistics: number1' и 'Income Target': number2'. 
 export const getFinancialStatistics = (data) => {    
     const number1 = data.reduce((sum, item) => {
-        return sum + item.Income;
-      }, 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
-    
-    const number2 = data.reduce((sum, item) => {
         return sum + item['Target Income'];
+      }, 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
+      
+    const number2 = data.reduce((sum, item) => {
+        return sum + item.Income;
       }, 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
     
     return {

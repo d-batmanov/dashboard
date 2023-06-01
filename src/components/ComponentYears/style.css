@@ -1,0 +1,8 @@
+.row-container {
+    display: flex;
+  }
+  
+.year {
+    margin-right: 10px; /* Add some spacing between the years */
+  }
+  

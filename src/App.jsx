@@ -1,4 +1,9 @@
 import './App.css'
+import { ComponentText } from "/Users/vladimirbatmanov/Desktop/projects/dashboard/src/components/ComponentText/ComponentText.jsx";
+import { ComponentYears } from '/Users/vladimirbatmanov/Desktop/projects/dashboard/src/components/ComponentYears/ComponentYears.jsx';
+import { ComponentFinancialStatistics } from '/Users/vladimirbatmanov/Desktop/projects/dashboard/src/components/ComponentFinancialStatistics/ComponentFinancialStatistics.jsx';
+import { ComponentQuantityItems } from '/Users/vladimirbatmanov/Desktop/projects/dashboard/src/components/ComponentQuantityItems/ComponentQuantityItems.jsx';
+//import { ComponentDataByMonth } from '/Users/vladimirbatmanov/Desktop/projects/dashboard/src/components/ComponentDataByMonth/ComponentDataByMonth.jsx';
 import { getAvailableYears, getDataByYear, getFinancialStatistics, aggregateDataByMonth, aggregateDataByIncomeSources, calculateAverageIncome, calculateTotalOperatingProfit, getTotalOperatingProfitForYear, aggregateDataByMarketingStrategies, calculateIncomeRatio, aggregateIncomeBySource} from './utils'
 import data from './data.xlsx?sheetjs';
 
@@ -7,9 +12,8 @@ import data from './data.xlsx?sheetjs';
 
 const App = () => {
   console.log('getAvailableYears', getAvailableYears(data))
-  // console.log('getDataByTargetYear', getDataByTargetYear(data, 2020))
-  // console.log(data)
-  const year = 2021;
+  
+  const year = 2022;
 
   const dataByCurrentYear = getDataByYear(data, year)
 
@@ -35,9 +39,15 @@ const App = () => {
 
   
   return (
-    <>
-      <h1> My dashboard</h1>
-    </>
+    <div>
+      <h1>My Dashboard</h1>
+      <ComponentText /> {/* Render the ComponentText component */}
+      <ComponentYears years={getAvailableYears(data)} />
+      <ComponentFinancialStatistics financialStatistics={getFinancialStatistics(dataByCurrentYear)} />
+
+      <ComponentQuantityItems quantityItems={aggregateDataByIncomeSources(dataByCurrentYear)} />
+    </div>
+
   )
 }
 
