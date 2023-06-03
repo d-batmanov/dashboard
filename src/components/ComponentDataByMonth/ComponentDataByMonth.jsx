@@ -1,37 +1,34 @@
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import css from "./ComponentDataByMonth.module.css";
+
+import { useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
 
 export const ComponentDataByMonth = ({ data }) => {
   const chartContainerRef = useRef(null);
   const chartInstanceRef = useRef(null);
 
   useEffect(() => {
-    const formattedData = data.map(item => ({
-      Month: item.Month,
-      Income: parseFloat(item.Income.replace(',', '')),
-    }));
-
-    const ctx = chartContainerRef.current.getContext('2d');
+    const ctx = chartContainerRef.current.getContext("2d");
 
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy(); // Destroy the previous chart instance
     }
 
     chartInstanceRef.current = new Chart(ctx, {
-      type: 'line',
+      type: "line",
       data: {
-        labels: formattedData.map(item => item.Month),
+        labels: data.map((item) => item.Month),
         datasets: [
           {
-            label: 'Income',
-            data: formattedData.map(item => item.Income),
-            backgroundColor: 'rgba(0, 123, 255, 0.2)',
-            borderColor: 'rgba(0, 123, 255, 1)',
+            label: "Income",
+            data: data.map((item) => item.Income),
+            backgroundColor: "rgba(0, 123, 255, 0.2)",
+            borderColor: "rgba(0, 123, 255, 1)",
             borderWidth: 1,
             fill: {
-              target: 'origin',
-              above: 'rgba(0, 123, 255, 0.2)',
-              below: 'rgba(0, 123, 255, 0)',
+              target: "origin",
+              above: "rgba(0, 123, 255, 0.2)",
+              below: "rgba(0, 123, 255, 0)",
             },
           },
         ],
@@ -46,5 +43,9 @@ export const ComponentDataByMonth = ({ data }) => {
     });
   }, [data]);
 
-  return <canvas ref={chartContainerRef} />;
+  return (
+    <div className={css.root}>
+      <canvas ref={chartContainerRef} />
+    </div>
+  );
 };

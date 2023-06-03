@@ -1,32 +1,20 @@
-import React from 'react';
-
 export const ComponentDataByMarketingStrategies = ({ data }) => {
-    
-    return (
-        <div>
-        <h2>Данные по маркетинговым стратегиям</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Маркетинговая стратегия</th>
-                <th>Доход</th>
-                <th>Процентное соотношение</th>
-            </tr>
-            </thead>
-            <tbody>
-            {data.map(item => (
-                <tr key={item['Marketing Strategies']}>
-                <td>{item['Marketing Strategies']}</td>
-                <td>{item.Income}</td>
-                <td>{item['Процентное соотношение - Income']}</td>
-                </tr>
-            ))}
-            </tbody>
-        </table>
-        </div>
-    );
+  console.log(data);
+  return (
+    <div>
+      <div>
+        <span>{data.b2c["Marketing Strategies"]}</span>
+        <span>{data.b2c.Income}</span>
+        <span>{data.b2c["Процентное соотношение - Income"]}</span>
+      </div>
+
+      <div>CHART</div>
+
+      <div>
+      <span>{data.b2b["Marketing Strategies"]}</span>
+        <span>{data.b2b.Income}</span>
+        <span>{data.b2b["Процентное соотношение - Income"]}</span>
+      </div>
+    </div>
+  );
 };
-
-
-
-

@@ -1,0 +1,18 @@
+.root {
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.title {
+    font-size: 30px;
+    line-height: 36px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.statisticValue {
+    font-size: 25px;
+    line-height: 27px;
+    margin-bottom: 10px;
+}
+

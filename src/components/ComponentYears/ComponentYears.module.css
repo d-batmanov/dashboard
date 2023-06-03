@@ -1,0 +1,8 @@
+.root {
+  display: flex;
+  column-gap: 8px;
+}
+
+.yearButton {
+  padding: 4px;
+}

@@ -14,11 +14,11 @@ export const getDataByYear = (data, year) => {
 export const getFinancialStatistics = (data) => {    
     const number1 = data.reduce((sum, item) => {
         return sum + item['Target Income'];
-      }, 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
+      }, 0);
       
     const number2 = data.reduce((sum, item) => {
         return sum + item.Income;
-      }, 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
+      }, 0);
     
     return {
       'Financial Statistics': number1,
@@ -51,7 +51,7 @@ export const aggregateDataByMonth = (data) => {
   
     return aggregatedData.map(item => ({
       Month: item.Month,
-      Income: item.Income.toLocaleString(undefined, { maximumFractionDigits: 0 })
+      Income: item.Income
     }));
   };
 
@@ -108,7 +108,7 @@ export function calculateAverageIncome(data, aggregateDataByMonth) {
   
     // Суммируем доходы по месяцам
     const totalIncome = aggregatedData.reduce((sum, data) => {
-      const income = parseFloat(data.Income.replace(',', ''));
+      const income = parseFloat(data.Income);
       return sum + income;
     }, 0);
   
@@ -186,7 +186,10 @@ export const aggregateDataByMarketingStrategies = (data) => {
       'Процентное соотношение - Income': item['Процентное соотношение - Income']
     }));
   
-    return modifiedData;
+    return {
+      b2c: modifiedData[0],
+      b2b: modifiedData[1],
+    };
   };
   
 // 10 функция
@@ -216,7 +219,7 @@ export const aggregateIncomeBySource = (data) => {
   
     const aggregatedData = Object.entries(incomeBySource).map(([source, income]) => ({
       'Income sources': source,
-      Income: income.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      Income: income
     }));
   
     return aggregatedData;

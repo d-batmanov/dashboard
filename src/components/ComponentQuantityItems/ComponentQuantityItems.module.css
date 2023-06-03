@@ -1,0 +1,21 @@
+.root {
+    color: #fff
+}
+
+.title {    
+    font-size: 22px;
+    line-height: 25px;
+}
+
+.row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.rowTitle {
+    width: 56%;
+}
+
+.value {
+    width: 22%;
+}
