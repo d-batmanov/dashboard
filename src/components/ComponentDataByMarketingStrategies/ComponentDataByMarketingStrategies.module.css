@@ -1,0 +1,18 @@
+.root {
+    padding: 10px;
+    text-align: center;
+    background-color: #1d1d3a;
+    border-radius: 5px;
+    margin-top: 20px;
+    height: 350px;
+}
+
+
+span {
+    display: block;
+}
+
+.chartContainerWrapper {
+    width: 130px; /* Задайте нужную ширину графика */
+    height: 200px; /* Задайте нужную высоту графика */
+  }

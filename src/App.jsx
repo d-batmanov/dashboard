@@ -20,6 +20,7 @@ import {
   aggregateDataByMarketingStrategies,
   calculateIncomeRatio,
   aggregateIncomeBySource,
+  aggregateDataByIncomeSourcess,
 } from "./utils";
 import data from "./data.xlsx?sheetjs";
 
@@ -63,6 +64,10 @@ const printData = (year) => {
   console.log(
     "aggregateIncomeBySource",
     aggregateIncomeBySource(dataByCurrentYear)
+  );
+  console.log(
+    "aggregateDataByIncomeSourcess",
+    aggregateDataByIncomeSourcess(dataByCurrentYear)
   );
 };
 
@@ -108,18 +113,18 @@ const App = () => {
             aggregateDataByMonth
           )}
         />
+        <div className={css.rightColumnColor}>
+          <ComponentTotalOperatingProfit
+            data={calculateTotalOperatingProfit(dataByCurrentYear)}
+          />
 
-        <ComponentTotalOperatingProfit
-          data={calculateTotalOperatingProfit(dataByCurrentYear)}
-        />
-
-        <ComponentTotalOperatingProfitForYear
-          data={getTotalOperatingProfitForYear(
-            dataByCurrentYear,
-            calculateTotalOperatingProfit
-          )}
-        />
-
+          <ComponentTotalOperatingProfitForYear
+            data={getTotalOperatingProfitForYear(
+              dataByCurrentYear,
+              calculateTotalOperatingProfit
+            )}
+          />
+        </div>
         <ComponentDataByMarketingStrategies
           data={aggregateDataByMarketingStrategies(dataByCurrentYear)}
         />

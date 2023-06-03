@@ -1,4 +1,13 @@
 .root {
     margin-bottom: 30px;
-    height: 200px;
+    width: 300px; /* Задайте нужную ширину графика */
+    height: 200px; /* Задайте нужную высоту графика */
+
+}
+
+.chartLeft {
+    box-sizing: border-box;
+    display: block;
+    height: 150px;
+    width: 200px;
 }

@@ -1,5 +1,4 @@
 import css from "./ComponentDataByMonth.module.css";
-
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
@@ -22,7 +21,6 @@ export const ComponentDataByMonth = ({ data }) => {
           {
             label: "Income",
             data: data.map((item) => item.Income),
-            backgroundColor: "rgba(0, 123, 255, 0.2)",
             borderColor: "rgba(0, 123, 255, 1)",
             borderWidth: 1,
             fill: {
@@ -34,9 +32,14 @@ export const ComponentDataByMonth = ({ data }) => {
         ],
       },
       options: {
+        plugins: {
+          legend: {
+            display: false, // Hide the legend
+          },
+        },
         scales: {
           y: {
-            beginAtZero: true,
+            display: false, // Hide the Y axis
           },
         },
       },

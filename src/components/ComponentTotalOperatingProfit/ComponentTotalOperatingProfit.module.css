@@ -1,0 +1,10 @@
+
+.root {
+  display: inline-block;
+  width: 120px; 
+  height: 209px; 
+}
+
+p {
+  margin: 0;
+}

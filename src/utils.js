@@ -1,16 +1,13 @@
-//! 1. Функция - getAvailableYears, которая принимает весь массив данных и возвращает массив доступных годов в виде строк:
 export const getAvailableYears = (data) => {
     const years = data.map(item => item.Year);
     const uniqueYears = [...new Set(years)];
     return uniqueYears
 };
 
-//! 2. Вот функция принимает год и массив данных и возвращает новый массив объектов, относящихся только к этому году:
 export const getDataByYear = (data, year) => {
     return data.filter(item => item.Year === year);
 };
 
-//! 3. Вот функция - getFinancialStatistics, которая принимает массив данных date и год year и возвращает объект с двумя полями: 'Financial Statistics: number1' и 'Income Target': number2'. 
 export const getFinancialStatistics = (data) => {    
     const number1 = data.reduce((sum, item) => {
         return sum + item['Target Income'];
@@ -26,14 +23,6 @@ export const getFinancialStatistics = (data) => {
     };
   };
 
-
-//! 4. Вот функция, которая принимает массив данных date и год year и возвращает новый массив объектов с агрегированными значениями по месяцам:
-/*
- * TODO: Сделать для всех функций где используется подобный подход
- * 1. Убрать year из аргумента функции, функция должа принимать только аргумент data, без какой либо
- * фильтрации внутри функции, отфильтрованные данные функция получает в качестве аргумента. 
- * Сама функция должна выполнять только одно действие, которое отражено в ее названии
- */
 export const aggregateDataByMonth = (data) => {
     const aggregatedData = data.reduce((result, item) => {
       const month = item.Month;
@@ -55,8 +44,6 @@ export const aggregateDataByMonth = (data) => {
     }));
   };
 
-
-//! 5. Вот функция, которая принимает массив данных date и год Year и возвращает массив объектов с агрегированными значениями по источникам дохода ('Income sources') (суммируя столбец Counts):
 export const aggregateDataByIncomeSources = (data) => {
 
     const aggregatedData = data.reduce((result, item) => {
@@ -92,33 +79,19 @@ export const aggregateDataByIncomeSources = (data) => {
     return modifiedData;
   };
   
-
-//! 6. Вот экспортируемая функция, которая принимает массив данных, год и функцию для агрегации данных по месяцам и возвращает среднее значение дохода (Income) из функции aggregateDataByMonth.
-
-/**
- * TODO: 
- * 1. Удалить аргумент функции aggregateDataByMonth
- * 2. Удалить year
- * 3. Переименовать date в data
- * 4. Избавить от функции aggregateDataByMonth, получать в качестве аргумента функции данные за конкретный год
- * На основе данных за год просуммировать income каждой строки и разделить результат на кол-во месяцев в году
- */
 export function calculateAverageIncome(data, aggregateDataByMonth) {
     const aggregatedData = aggregateDataByMonth(data);
-  
-    // Суммируем доходы по месяцам
+
     const totalIncome = aggregatedData.reduce((sum, data) => {
       const income = parseFloat(data.Income);
       return sum + income;
     }, 0);
   
-    // Вычисляем среднее значение и округляем до целого числа
     const averageIncome = Math.round(totalIncome / aggregatedData.length);
   
     return averageIncome.toLocaleString(); // Форматируем число с разделителями
   }
   
-//! 7. Вот экспортируемая функция, которая принимает массив данных и год в качестве аргументов. 
 export const calculateTotalOperatingProfit = (data) => {
   
     const aggregatedData = data.reduce((result, item) => {
@@ -141,12 +114,9 @@ export const calculateTotalOperatingProfit = (data) => {
     }));
   };
   
-
-//!! 8.  Вот экспортируемая функция, которая принимает функцию calculateTotalOperatingProfit, массив данных date и год year. 
 export function getTotalOperatingProfitForYear(data, calculateTotalOperatingProfit) {
     const monthlyData = calculateTotalOperatingProfit(data);
 
-    // Вычисляем сумму операционных прибылей за год
     const totalOperatingProfit = monthlyData.reduce((sum, data) => {
       const profit = parseFloat(data['operating profit'].replace(',', ''));
       return sum + profit;
@@ -155,7 +125,6 @@ export function getTotalOperatingProfitForYear(data, calculateTotalOperatingProf
     return totalOperatingProfit.toLocaleString(); // Возвращаем сумму в виде строки
   }
   
-// 9. функция, которая принимает массив данных date и год year и возвращает новый массив объектов с агрегированными значениями по полю 'Marketing Strategies' и полю 'Income'.
 export const aggregateDataByMarketingStrategies = (data) => {
   
     const totalIncome = data.reduce((sum, item) => sum + parseFloat(item.Income), 0);
@@ -187,12 +156,11 @@ export const aggregateDataByMarketingStrategies = (data) => {
     }));
   
     return {
-      b2c: modifiedData[0],
-      b2b: modifiedData[1],
+      b2b: modifiedData[0],
+      b2c: modifiedData[1],
     };
   };
-  
-// 10 функция
+
 export const calculateIncomeRatio = (data) => {
     const totalIncome = data.reduce((sum, item) => sum + parseFloat(item.Income), 0);
     const totalTargetIncome = data.reduce((sum, item) => sum + parseFloat(item['Target Income']), 0);
@@ -202,7 +170,6 @@ export const calculateIncomeRatio = (data) => {
     return incomeRatio.toFixed(0) + '%'; 
   };
 
-// 11 функция 
 export const aggregateIncomeBySource = (data) => {
     const incomeBySource = data.reduce((result, item) => {
       const source = item['Income sources'];
@@ -227,8 +194,64 @@ export const aggregateIncomeBySource = (data) => {
   
 // 12 функция (листья)
 
+export const aggregateDataByIncomeSourcess = (data) => {
+
+  // Вычисляем общую сумму 'Income' для процентного соотношения
+  const totalIncome = data.reduce((sum, item) => {
+    return sum + parseFloat(item.Income);
+  }, 0);
+
+  // Группируем данные по 'Income sources' и вычисляем сумму по 'Income' и процентное соотношение
+  const incomeSourcesData = data.reduce((result, item) => {
+    const incomeSource = item['Income sources'];
+    const income = parseFloat(item.Income);
+    const percentage = ((income / totalIncome) * 100).toFixed(2) + '%';
+
+    if (!result.hasOwnProperty(incomeSource)) {
+      result[incomeSource] = {
+        income: 0,
+        percentage: 0
+      };
+    }
+
+    result[incomeSource].income += income;
+    result[incomeSource].percentage = ((result[incomeSource].income / totalIncome) * 100).toFixed(2) + '%';
+
+    return result;
+  }, {});
+
+  // Группируем данные по 'Income sources' и 'Income Breakdowns' и вычисляем сумму по 'Income' и процентное соотношение
+  const incomeBreakdownsData = data.reduce((result, item) => {
+    const incomeSource = item['Income sources'];
+    const incomeBreakdown = item['Income Breakdowns'];
+    const income = parseFloat(item.Income);
+    const percentage = ((income / totalIncome) * 100).toFixed(2) + '%';
+
+    if (!result.hasOwnProperty(incomeSource)) {
+      result[incomeSource] = {};
+    }
+
+    if (!result[incomeSource].hasOwnProperty(incomeBreakdown)) {
+      result[incomeSource][incomeBreakdown] = {
+        income: 0,
+        percentage: 0
+      };
+    }
+
+    result[incomeSource][incomeBreakdown].income += income;
+    result[incomeSource][incomeBreakdown].percentage = ((result[incomeSource][incomeBreakdown].income / totalIncome) * 100).toFixed(2) + '%';
+
+    return result;
+  }, {});
+
+  return {
+    incomeSourcesData,
+    incomeBreakdownsData
+  };
+}
 
   
+
   
   
   

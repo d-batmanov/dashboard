@@ -1,0 +1,21 @@
+.root {
+    padding: 10px;
+    text-align: center;
+    background-color: #1d1d3a;
+    border-radius: 5px;
+  }
+
+.averageIncomeNumber {
+    font-size: 26px;
+    margin: 0;
+  }
+
+.averageText {
+  font-size: 26px;
+  margin: 0;
+}
+
+.monthlyIncomeText {
+  font-size: 14px;
+    margin: 0;
+}
