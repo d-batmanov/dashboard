@@ -8,6 +8,7 @@ import { ComponentAverageIncome } from "./components/ComponentAverageIncome/Comp
 import { ComponentTotalOperatingProfit } from "./components/ComponentTotalOperatingProfit/ComponentTotalOperatingProfit.jsx";
 import { ComponentTotalOperatingProfitForYear } from "./components/ComponentTotalOperatingProfitForYear/ComponentTotalOperatingProfitForYear.jsx";
 import { ComponentDataByMarketingStrategies } from "./components/ComponentDataByMarketingStrategies/ComponentDataByMarketingStrategies.jsx";
+import { MainChart } from './components/MainChart/MainChart'
 import {
   getAvailableYears,
   getDataByYear,
@@ -76,7 +77,7 @@ const App = () => {
 
   const dataByCurrentYear = getDataByYear(data, year);
 
-  printData(year);
+  // printData(year);
 
   return (
     <div className={css.root}>
@@ -101,9 +102,7 @@ const App = () => {
       </div>
 
       <div className={css.mainChart}>
-        <div className={css.chart}>
-          {calculateIncomeRatio(dataByCurrentYear)}
-        </div>
+        <MainChart data={aggregateDataByIncomeSourcess(dataByCurrentYear)} />
       </div>
 
       <div className={css.rightColumn}>
